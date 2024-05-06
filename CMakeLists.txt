@@ -5,6 +5,7 @@ project(${project_name} VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 message(STATUS "Project source dir: ${PROJECT_SOURCE_DIR}")
+message(STATUS "Building project: ${PROJECT_NAME}")
 
 if(MSVC)
     add_compile_options(/W4 /WX /Zi)
@@ -22,8 +23,12 @@ find_package(Vulkan REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${Vulkan_INCLUDE_DIRS})
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "include/*.hpp")
 
-add_executable(${project_name} main.cpp ${SOURCES})
+# Update the add_executable to correctly reference main.cpp now located in src/
+add_executable(${project_name} ${SOURCES} ${HEADERS})
+
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${Vulkan_LIBRARIES})
