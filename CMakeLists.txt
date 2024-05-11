@@ -24,7 +24,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(${Vulkan_INCLUDE_DIRS})
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "include/*.hpp")
+file(GLOB_RECURSE HEADERS "${CMAKE_PROJECT_DIR}/include/*.hpp")
 
 # Update the add_executable to correctly reference main.cpp now located in src/
 add_executable(${project_name} ${SOURCES} ${HEADERS})
